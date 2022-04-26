@@ -1,0 +1,68 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+
+namespace Mywork
+{
+    internal class Program
+    {
+        public static void Main(string[] args)
+        {
+            int[,] array = new int[4, 5];
+            Random random = new Random();
+            int[] kolzero = new int[5];
+            int[] lastEl = new int[5];
+
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    array[i, j] = random.Next(0, 3);
+                }
+            }
+            Console.WriteLine("Our array:");
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    Console.Write(array[i, j] + "  ");
+                }
+                Console.WriteLine();
+            }
+            for (int i = 0; i < array.GetLength(1); i++)
+            {
+                for (int j = 0; j < array.GetLength(0); j++)
+                {
+                    if (array[j, i] == 0)
+                    {
+                        kolzero[i] += 1;
+                    }
+                }
+            }
+            int number = Array.FindIndex(kolzero, i => i == kolzero.Max());
+
+            int[] transfer = new int[4];
+            for (int j = 0; j < 4; j++)
+            {
+                transfer[j] = array[j, number];
+                lastEl[j] = array[j, 4];
+            }
+
+            for (int j = 0; j < 4; j++)
+            {
+                array[j, number] = lastEl[j];
+                array[j, 4] = transfer[j];
+            }
+            Console.WriteLine("After manipulation:");
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    Console.Write(array[i, j] + "  ");
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
